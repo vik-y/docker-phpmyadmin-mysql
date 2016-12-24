@@ -1,0 +1,24 @@
+# service configuration for our database
+db:
+ 
+  # use the preferred version of the official Postgres image
+  # see https://hub.docker.com/_/postgres/
+  image: mysql
+  container_name: mysql
+  environment:
+  - MYSQL_ROOT_PASSWORD=thanks123
+  # persist the database between containers by storing it in a volume
+  volumes:
+  - ./data:/var/lib/mysql
+  - ./mysql.conf.d:/etc/mysql/mysql.conf.d
+  ports:
+  - 3310:3306 
+  expose:
+  - "3306"
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  links: 
+    - db
+  ports: 
+    - "8081:80"  
